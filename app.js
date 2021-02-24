@@ -17,19 +17,19 @@ function createHtmlJoke(joke, score) {
     <div id="joke_div">
     <p class="joke">${joke}</p>
     <p class="net-count">${score}</p>
-    <button id="up">Up</button>
-    <button id="down">Down</button>
+    <button class="up">Up</button>
+    <button class="down">Down</button>
     </div>`
 }
 
-$('#joke_container').on('click', '#up', (e) => {
+$('#joke_container').on('click', ".up", (e) => {
     let joke = $(e.target).parent().find('.joke').text();
     jokes[joke]++;
     $(e.target).parent().find('.net-count').text(jokes[joke])
     reOrderJokes();
 })
 
-$('#joke_container').on('click', '#down', (e) => {
+$('#joke_container').on('click', '.down', (e) => {
     let joke = $(e.target).parent().find('.joke').text();
     jokes[joke]--;
     $(e.target).parent().find('.net-count').text(jokes[joke])
