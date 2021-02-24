@@ -14,23 +14,25 @@ $(async function () {
 
 function createHtmlJoke(joke, score) {
     return `
-    <div id="joke_div">
+    <div class="joke_div">
     <p class="joke">${joke}</p>
+    <div class="buttons_div">
+        <button class="up">Up Vote</button>
+        <button class="down">Down Vote</button>
+    </div>
     <p class="net-count">${score}</p>
-    <button class="up">Up</button>
-    <button class="down">Down</button>
     </div>`
 }
 
 $('#joke_container').on('click', ".up", (e) => {
-    let joke = $(e.target).parent().find('.joke').text();
+    let joke = $(e.target).parent().parent().find('.joke').text();
     jokes[joke]++;
     $(e.target).parent().find('.net-count').text(jokes[joke])
     reOrderJokes();
 })
 
 $('#joke_container').on('click', '.down', (e) => {
-    let joke = $(e.target).parent().find('.joke').text();
+    let joke = $(e.target).parent().parent().find('.joke').text();
     jokes[joke]--;
     $(e.target).parent().find('.net-count').text(jokes[joke])
     reOrderJokes();

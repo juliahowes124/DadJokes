@@ -1,0 +1,25 @@
+body {
+    background-color: beige;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+h1 {
+    text-align: center;
+}
+
+.joke_div {
+    display: flex;
+    width: 60%;
+    margin: auto;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buttons_div {
+    display: flex;
+    flex-direction: column;
+}
+
+.joke {
+    width: 70%;
+}
