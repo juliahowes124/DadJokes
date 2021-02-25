@@ -17,8 +17,8 @@ function createHtmlJoke(joke, score) {
     <div class="joke_div">
     <p class="joke">${joke}</p>
     <div class="buttons_div">
-        <button class="up">Up Vote</button>
-        <button class="down">Down Vote</button>
+        <button class="up btn btn-success mb-1"><i class="fas fa-thumbs-up"></i></button>
+        <button class="down btn btn-danger"><i class="fas fa-thumbs-down"></i></button>
     </div>
     <p class="net-count">${score}</p>
     </div>`

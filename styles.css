@@ -9,8 +9,7 @@ h1 {
 
 .joke_div {
     display: flex;
-    width: 60%;
-    margin: auto;
+    margin: 1rem auto;
     justify-content: space-between;
     align-items: center;
 }
