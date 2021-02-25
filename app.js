@@ -2,19 +2,20 @@ let jokes = {};
 
 $(async function () {
     for (let i = 0; i < 10; i++) {
-        const joke = await axios.get('https://icanhazdadjoke.com/', {
+        const response = await axios.get('https://icanhazdadjoke.com/', {
             headers: {
-                'Accept': 'text/plain'
+                'Accept': 'application/json'
             }
         });
-        jokes[joke.data] = 0;
-        $('#joke_container').append(createHtmlJoke(joke.data, 0));
+        const { joke, id } = response.data;
+        jokes[id] = { "joke": joke, "count": 0 };
+        $('#joke_container').append(createHtmlJoke(joke, id, 0));
     }
 });
 
-function createHtmlJoke(joke, score) {
+function createHtmlJoke(joke, id, score) {
     return `
-    <div class="joke_div">
+    <div class="joke_div" data-joke-id=${id}>
     <p class="joke">${joke}</p>
     <div class="buttons_div">
         <button class="up btn btn-success mb-1"><i class="fas fa-thumbs-up"></i></button>
@@ -25,24 +26,24 @@ function createHtmlJoke(joke, score) {
 }
 
 $('#joke_container').on('click', ".up", (e) => {
-    let joke = $(e.target).parent().parent().find('.joke').text();
-    jokes[joke]++;
-    $(e.target).parent().find('.net-count').text(jokes[joke])
+    let jokeId = $(e.currentTarget).closest(".joke_div").data("joke-id"); //need currentTarget instead of target b/c clicking on icon makes the icon the event target due to "event propagation"
+    jokes[jokeId].count++;
+    $(e.currentTarget).parent().next().text(jokes[jokeId].count);
     reOrderJokes();
 })
 
 $('#joke_container').on('click', '.down', (e) => {
-    let joke = $(e.target).parent().parent().find('.joke').text();
-    jokes[joke]--;
-    $(e.target).parent().find('.net-count').text(jokes[joke])
+    let jokeId = $(e.currentTarget).closest(".joke_div").data("joke-id");
+    jokes[jokeId].count--;
+    $(e.currentTarget).parent().next().text(jokes[jokeId].count)
     reOrderJokes();
 })
 
 function reOrderJokes() {
     $('#joke_container').empty();
-    let sorted = Object.entries(jokes).sort((a, b) => b[1] - a[1]);
-    for (let [joke, score] of sorted) {
-        $('#joke_container').append(createHtmlJoke(joke, score));
+    let sorted = Object.entries(jokes).sort((a, b) => b[1].count - a[1].count);
+    for (let [id, { joke, count }] of sorted) {
+        $('#joke_container').append(createHtmlJoke(joke, id, count));
     }
 }
 
