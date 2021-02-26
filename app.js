@@ -2,13 +2,15 @@ let jokes = {};
 
 $(async function () {
     for (let i = 0; i < 10; i++) {
+
+        //later Node, all jokes reqs at once
         const response = await axios.get('https://icanhazdadjoke.com/', {
             headers: {
                 'Accept': 'application/json'
             }
         });
         const { joke, id } = response.data;
-        jokes[id] = { "joke": joke, "count": 0 };
+        jokes[id] = { joke, count: 0 };
         $('#joke_container').append(createHtmlJoke(joke, id, 0));
     }
 });
@@ -26,6 +28,7 @@ function createHtmlJoke(joke, id, score) {
 }
 
 $('#joke_container').on('click', ".up", (e) => {
+    //store target in var
     let jokeId = $(e.currentTarget).closest(".joke_div").data("joke-id"); //need currentTarget instead of target b/c clicking on icon makes the icon the event target due to "event propagation"
     jokes[jokeId].count++;
     $(e.currentTarget).parent().next().text(jokes[jokeId].count);
@@ -38,6 +41,7 @@ $('#joke_container').on('click', '.down', (e) => {
     $(e.currentTarget).parent().next().text(jokes[jokeId].count)
     reOrderJokes();
 })
+//combine functions
 
 function reOrderJokes() {
     $('#joke_container').empty();
