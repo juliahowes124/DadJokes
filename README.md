@@ -1,5 +1,5 @@
 # Dad Jokes
-Rithm School Project
+[Rithm School](https://www.rithmschool.com/) Project
 
 ## Tools
 
